@@ -1,0 +1,2156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAME Academy — Understanding the Superior Lien</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text: #1a1a1a;
+            --text-secondary: #444;
+            --text-light: #666;
+            --text-muted: #888;
+            --border: #e0e0e0;
+            --border-light: #eee;
+            --bg: #fff;
+            --bg-alt: #f8f9fa;
+            --bg-dark: #f0f2f5;
+            --accent: #1a5a3c;
+            --accent-light: #e8f5ee;
+            --warning: #b45309;
+            --warning-bg: #fffbeb;
+            --error: #991b1b;
+            --error-bg: #fef2f2;
+            --success: #166534;
+            --success-bg: #f0fdf4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        /* Layout */
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-alt);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+            padding: 24px 0;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .sidebar-logo {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+        }
+
+        .sidebar-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .nav-section {
+            padding: 0 12px;
+            margin-bottom: 8px;
+        }
+
+        .nav-section-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 8px 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-dark);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: var(--accent-light);
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .nav-item.completed::before {
+            content: '✓';
+            margin-right: 8px;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .nav-number {
+            width: 20px;
+            height: 20px;
+            background: var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .nav-item.active .nav-number {
+            background: var(--accent);
+            color: white;
+        }
+
+        .nav-item.completed .nav-number {
+            background: var(--success);
+            color: white;
+        }
+
+        .progress-bar {
+            margin: 24px;
+            padding: 16px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .progress-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .progress-track {
+            height: 6px;
+            background: var(--border-light);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        .content {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* Module styles */
+        .module {
+            display: none;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        .module-header {
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .module-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .module-title {
+            font-size: 36px;
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .module-desc {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        /* Typography */
+        h2 {
+            font-size: 24px;
+            font-weight: 500;
+            margin: 48px 0 20px;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin: 32px 0 16px;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+
+        strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Callout boxes */
+        .callout {
+            padding: 20px 24px;
+            border-radius: 8px;
+            margin: 24px 0;
+            border-left: 4px solid;
+        }
+
+        .callout-key {
+            background: var(--accent-light);
+            border-color: var(--accent);
+        }
+
+        .callout-warning {
+            background: var(--warning-bg);
+            border-color: var(--warning);
+        }
+
+        .callout-error {
+            background: var(--error-bg);
+            border-color: var(--error);
+        }
+
+        .callout-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .callout-key .callout-title { color: var(--accent); }
+        .callout-warning .callout-title { color: var(--warning); }
+        .callout-error .callout-title { color: var(--error); }
+
+        .callout p {
+            margin-bottom: 0;
+            font-size: 15px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 15px;
+        }
+
+        th {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        td {
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) td {
+            background: var(--bg-alt);
+        }
+
+        /* Code */
+        code {
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 14px;
+            background: var(--bg-alt);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border-light);
+        }
+
+        pre {
+            background: var(--bg-alt);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            margin: 24px 0;
+        }
+
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* Interactive elements */
+        .accordion {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 24px 0;
+            overflow: hidden;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            padding: 16px 20px;
+            background: var(--bg-alt);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.15s ease;
+        }
+
+        .accordion-header:hover {
+            background: var(--bg-dark);
+        }
+
+        .accordion-icon {
+            font-size: 18px;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+        }
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(45deg);
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 20px;
+            font-size: 15px;
+        }
+
+        .accordion-item.open .accordion-content {
+            display: block;
+        }
+
+        /* Quiz */
+        .quiz {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+
+        .quiz-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .quiz-question {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quiz-option {
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: all 0.15s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: var(--success-bg);
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--error);
+            background: var(--error-bg);
+        }
+
+        .quiz-feedback {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            display: none;
+        }
+
+        .quiz-feedback.correct {
+            background: var(--success-bg);
+            color: var(--success);
+            display: block;
+        }
+
+        .quiz-feedback.incorrect {
+            background: var(--error-bg);
+            color: var(--error);
+            display: block;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin: 32px 0;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 24px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--accent);
+        }
+
+        .timeline-item.warning .timeline-dot {
+            border-color: var(--warning);
+        }
+
+        .timeline-item.error .timeline-dot {
+            border-color: var(--error);
+        }
+
+        .timeline-year {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .timeline-item.warning .timeline-year {
+            color: var(--warning);
+        }
+
+        .timeline-item.error .timeline-year {
+            color: var(--error);
+        }
+
+        .timeline-content {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        /* Navigation buttons */
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #145030;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-alt);
+            border-color: var(--text-muted);
+        }
+
+        /* Verification demo */
+        .verify-demo {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .verify-demo-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .verify-demo input {
+            width: 100%;
+            padding: 12px 16px;
+            font-family: 'SF Mono', monospace;
+            font-size: 13px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .verify-demo .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .verify-result {
+            margin-top: 16px;
+            padding: 16px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-family: 'SF Mono', monospace;
+            font-size: 13px;
+            display: none;
+        }
+
+        .verify-result.show {
+            display: block;
+        }
+
+        /* Comparison interactive */
+        .compare-toggle {
+            display: flex;
+            background: var(--bg-alt);
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .compare-btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.15s ease;
+            color: var(--text-secondary);
+        }
+
+        .compare-btn.active {
+            background: white;
+            color: var(--text);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .compare-content {
+            display: none;
+        }
+
+        .compare-content.active {
+            display: block;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 16px 0 24px 24px;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Blockquote */
+        blockquote {
+            border-left: 4px solid var(--border);
+            padding-left: 20px;
+            margin: 24px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 40px 24px;
+            }
+
+            .module-title {
+                font-size: 28px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .sidebar, .module-nav, .quiz, .verify-demo {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .module {
+                display: block !important;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">FLAME ACADEMY</div>
+                <div class="sidebar-subtitle">Understanding the Superior Lien</div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-label">Your Progress</div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="progress-text" id="progressText">0 of 10 modules complete</div>
+            </div>
+
+            <nav>
+                <div class="nav-section">
+                    <div class="nav-section-title">Foundation</div>
+                    <div class="nav-item active" data-module="0">
+                        <span class="nav-number">1</span>
+                        Introduction
+                    </div>
+                    <div class="nav-item" data-module="1">
+                        <span class="nav-number">2</span>
+                        The Disease
+                    </div>
+                    <div class="nav-item" data-module="2">
+                        <span class="nav-number">3</span>
+                        The 2019 Warning
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">The Problem</div>
+                    <div class="nav-item" data-module="3">
+                        <span class="nav-number">4</span>
+                        Certificate-less Fraud
+                    </div>
+                    <div class="nav-item" data-module="4">
+                        <span class="nav-number">5</span>
+                        Six Years of Silence
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">The Solution</div>
+                    <div class="nav-item" data-module="5">
+                        <span class="nav-number">6</span>
+                        The FLAME Protocol
+                    </div>
+                    <div class="nav-item" data-module="6">
+                        <span class="nav-number">7</span>
+                        The Superior Lien
+                    </div>
+                    <div class="nav-item" data-module="7">
+                        <span class="nav-number">8</span>
+                        Collateral vs. Claims
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Application</div>
+                    <div class="nav-item" data-module="8">
+                        <span class="nav-number">9</span>
+                        Verification
+                    </div>
+                    <div class="nav-item" data-module="9">
+                        <span class="nav-number">10</span>
+                        The Implications
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="content">
+                <!-- Module 0: Introduction -->
+                <div class="module active" id="module-0">
+                    <div class="module-header">
+                        <div class="module-number">Module 1</div>
+                        <h1 class="module-title">Introduction</h1>
+                        <p class="module-desc">Understanding why this matters and what you will learn.</p>
+                    </div>
+
+                    <h2>Why This Training Exists</h2>
+                    <p>The global financial system operates on a foundation of paper claims, institutional trust, and legal enforcement. For centuries, this system has functioned—imperfectly—because there was no alternative.</p>
+                    <p><strong>There is now an alternative.</strong></p>
+                    <p>This training will teach you to understand a fundamental shift in how collateral, liens, and security interests can work. Not in theory—in practice, deployed today on Ethereum mainnet.</p>
+
+                    <div class="callout callout-key">
+                        <div class="callout-title">Key Insight</div>
+                        <p>The problem was identified in public record in 2019. The solution was built in 2025. The six years of silence in between created an undeniable evidentiary record.</p>
+                    </div>
+
+                    <h2>What You Will Learn</h2>
+                    <ul>
+                        <li><strong>The Disease:</strong> What is certificate-less securities fraud and why does it matter?</li>
+                        <li><strong>The Warning:</strong> How was this problem documented in SEC public record?</li>
+                        <li><strong>The Silence:</strong> What happened between 2019 and 2025?</li>
+                        <li><strong>The Cure:</strong> How does FLAME Protocol solve these problems mathematically?</li>
+                        <li><strong>The Superior Lien:</strong> Why is on-chain collateral fundamentally different from traditional security interests?</li>
+                        <li><strong>The Implications:</strong> What does this mean for those who ignored the warning?</li>
+                    </ul>
+
+                    <h2>Prerequisites</h2>
+                    <p>No prior knowledge of blockchain technology is required. This training is designed for:</p>
+                    <ul>
+                        <li>Financial professionals seeking to understand new collateral structures</li>
+                        <li>Legal professionals evaluating security interests</li>
+                        <li>Institutional partners considering credit facility arrangements</li>
+                        <li>Anyone who needs to understand why this approach is different</li>
+                    </ul>
+
+                    <h2>How This Training Works</h2>
+                    <p>Each module builds on the previous one. Complete them in order. At the end of each module, you will find:</p>
+                    <ul>
+                        <li>A comprehension check to verify understanding</li>
+                        <li>Key takeaways to remember</li>
+                        <li>Navigation to the next module</li>
+                    </ul>
+                    <p>Your progress is saved automatically in your browser.</p>
+
+                    <div class="quiz" data-quiz="0">
+                        <div class="quiz-title">Comprehension Check</div>
+                        <div class="quiz-question">This training is primarily about:</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-answer="0">How to trade cryptocurrency</div>
+                            <div class="quiz-option" data-answer="1">A new form of speculation</div>
+                            <div class="quiz-option" data-answer="2" data-correct="true">A fundamental shift in how collateral and security interests work</div>
+                            <div class="quiz-option" data-answer="3">Day trading strategies</div>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="module-nav">
+                        <div></div>
+                        <button class="btn btn-primary" onclick="nextModule()">Begin Training →</button>
+                    </div>
+                </div>
+
+                <!-- Module 1: The Disease -->
+                <div class="module" id="module-1">
+                    <div class="module-header">
+                        <div class="module-number">Module 2</div>
+                        <h1 class="module-title">The Disease</h1>
+                        <p class="module-desc">Understanding certificate-less securities and the foundational fraud.</p>
+                    </div>
+
+                    <h2>What Is a Certificate?</h2>
+                    <p>In traditional finance, a <strong>certificate</strong> is the physical or electronic proof of ownership. When you own shares of stock, there is (or should be) a certificate. When you own a bond, there is a certificate. When you have a promissory note, there is a physical document.</p>
+                    <p>The certificate serves critical functions:</p>
+                    <ul>
+                        <li><strong>Proof of existence:</strong> The obligation actually exists</li>
+                        <li><strong>Chain of title:</strong> Who owned it, who transferred it, who owns it now</li>
+                        <li><strong>Terms:</strong> What exactly is owed, to whom, under what conditions</li>
+                        <li><strong>Signature:</strong> Who authorized the obligation</li>
+                    </ul>
+
+                    <h2>The Rise of Certificate-less Securities</h2>
+                    <p>Beginning in the 1970s, financial institutions began moving away from physical certificates. The stated reasons were efficiency and cost reduction. The actual result was something else entirely.</p>
+
+                    <div class="callout callout-warning">
+                        <div class="callout-title">The Problem</div>
+                        <p>When you remove the certificate, you remove the proof. What remains is a database entry—controlled by institutions who have every incentive to manipulate it.</p>
+                    </div>
+
+                    <h2>What Is Missing Without the Certificate?</h2>
+                    
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>The Underlying Security Agreement</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Every valid security must be created by a valid agreement. Without the physical certificate, where is the agreement? Who signed it? When? Under what authority?</p>
+                                <p>In certificate-less systems, the "agreement" is often a credit application, a click-through terms of service, or simply a database entry created by the institution itself.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Valid Chain of Title</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>If I sell you a bond, how do you know I owned it? How do you know the person who sold it to me owned it? In a certificate system, each transfer requires endorsement—a signature trail.</p>
+                                <p>In certificate-less systems, transfers happen through "book entry"—database updates controlled by custodians. The chain exists only in their records, which can be altered.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Authentic Signatures</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>A signature binds a person to an obligation. Without physical certificates, signatures become electronic authorizations—often "blank endorsements" that allow institutions to transfer assets without specific authorization.</p>
+                                <p>This is the equivalent of signing a blank check and handing it to someone else to fill in.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Independent Verification</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>With a physical certificate, anyone can examine it. Without one, verification requires trusting the institution's records—the same institution that benefits from the asset existing.</p>
+                                <p>You cannot independently verify what you cannot independently examine.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>The Fraud at the Foundation</h2>
+                    <p>Consider what happens in a certificate-less system:</p>
+                    <ol>
+                        <li>An institution creates a database entry saying you owe them money</li>
+                        <li>They use a credit application (not a security agreement) as "authorization"</li>
+                        <li>They transfer this "asset" to other institutions via book entry</li>
+                        <li>The receiving institution now claims you owe them—based on records you cannot examine</li>
+                        <li>When you ask for proof, they produce... a database printout</li>
+                    </ol>
+                    <p><strong>This is not hypothetical. This is how the system operates.</strong></p>
+
+                    <div class="callout callout-error">
+                        <div class="callout-title">The Legal Term</div>
+                        <p>Using a document for a purpose other than its intended purpose is fraud. Using a credit application as a security agreement is fraud. Every certificate-less security traded this way is evidence of fraud.</p>
+                    </div>
+
+                    <h2>Why This Matters</h2>
+                    <p>Certificate-less fraud is not a technical violation. It is the foundation of:</p>
+                    <ul>
+                        <li><strong>Mortgage fraud:</strong> Homes foreclosed without valid chain of title</li>
+                        <li><strong>Student loan fraud:</strong> Debts collected without valid security agreements</li>
+                        <li><strong>Credit card fraud:</strong> Obligations enforced based on applications, not agreements</li>
+                        <li><strong>Securities fraud:</strong> Assets traded without proof of existence</li>
+                    </ul>
+                    <p>This is not a small problem. It is the problem—the disease at the heart of the modern financial system.</p>
+
+                    <div class="quiz" data-quiz="1">
+                        <div class="quiz-title">Comprehension Check</div>
+                        <div class="quiz-question">What critical function does a certificate serve?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-answer="0">It makes documents look more official</div>
+                            <div class="quiz-option" data-answer="1" data-correct="true">It provides proof of existence, chain of title, terms, and authentic signatures</div>
+                            <div class="quiz-option" data-answer="2">It is required by tax law</div>
+                            <div class="quiz-option" data-answer="3">It allows faster trading</div>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="module-nav">
+                        <button class="btn btn-secondary" onclick="prevModule()">← Previous</button>
+                        <button class="btn btn-primary" onclick="nextModule()">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- Module 2: The 2019 Warning -->
+                <div class="module" id="module-2">
+                    <div class="module-header">
+                        <div class="module-number">Module 3</div>
+                        <h1 class="module-title">The 2019 Warning</h1>
+                        <p class="module-desc">How the problem was documented in public record.</p>
+                    </div>
+
+                    <h2>SEC File No. S7-07-19</h2>
+                    <p>On June 23, 2019, a formal comment was submitted to the Securities and Exchange Commission. This comment, now part of the public record, identified the certificate-less fraud problem in explicit terms.</p>
+
+                    <div class="callout callout-key">
+                        <div class="callout-title">From the Public Record</div>
+                        <p>"A change in policy requiring evidence that there is a valid underlying security agreement for every certificate-less bond traded on SEC regulated platforms."</p>
+                    </div>
+
+                    <h2>What the Warning Identified</h2>
+                    
+                    <h3>The Core Problem</h3>
+                    <blockquote>"The fact that EVERY certificate-less bond is traded as security based swap is an example of the continuing securities fraud that must be addressed. Every registered firm is in possession of stolen property, guilty of interstate commercial trafficking and identity theft without possession of the mandatory underlying security agreement."</blockquote>
+
+                    <h3>The Counterfeit Access Devices</h3>
+                    <blockquote>"The Racketeering Schemes consist of counterfeit agreements, and deceptive forms substituted in place of a valid security agreement, such as credit applications."</blockquote>
+
+                    <h3>The Applicable Law</h3>
+                    <p>The warning cited a statute from 1797—the Act to punish frauds committed on the Bank of the United States. This is not an obscure technicality. This law has never been repealed. It prescribes:</p>
+                    <ul>
+                        <li>Imprisonment at hard labor for 3-10 years</li>
+                        <li>Or imprisonment up to 10 years plus fines up to $5,000</li>
+                    </ul>
+                    <p>For anyone who utters, publishes, or uses false, forged, or counterfeited instruments with intent to defraud.</p>
+
+                    <h3>The Accessory Liability</h3>
+                    <blockquote>"Aiding, abetting and or rescue of any entity by regulatory entities with charge to ensure the laws are followed is an accessory. Under criminal law, an aider and abettor party to a crime will be criminally liable as a principal, an accessory before the fact, or an accessory after the fact."</blockquote>
+
+                    <h2>The Legal Significance</h2>
+                    <p>When something is filed with a regulatory agency and made part of the public record, it creates <strong>constructive notice</strong>. This is a legal doctrine with centuries of precedent.</p>
+
+                    <table>
+                        <tr>
+                            <th>Doctrine</th>
+                            <th>Meaning</th>
+                        </tr>
+                        <tr>
+                            <td>Constructive Notice</td>
+                            <td>Once information is in public record, all parties are deemed to have knowledge of it—whether they actually read it or not</td>
+                        </tr>
+                        <tr>
+                            <td>Willful Blindness</td>
+                            <td>Deliberately avoiding knowledge of wrongdoing does not create a defense</td>
+                        </tr>
+                        <tr>
+                            <td>Continuing Violation</td>
+                            <td>Each subsequent transaction after notice is a separate offense</td>
+                        </tr>
+                    </table>
+
+                    <p>After June 23, 2019, no regulated entity could claim ignorance of the certificate-less fraud problem. It was in the record.</p>
+
+                    <h2>What Happened Next?</h2>
+                    <p>The SEC's response to this filing was...</p>
+                    <p><strong>Silence.</strong></p>
+                    <p>No investigation was opened. No policy was changed. No enforcement action was taken. The warning sat in the public record while the fraud continued—and accelerated.</p>
+
+                    <div class="callout callout-warning">
+                        <div class="callout-title">The Significance of Silence</div>
+                        <p>In law, silence can be admission. When a party is accused of wrongdoing and has the opportunity to respond but chooses not to, their silence can be taken as acknowledgment.</p>
+                        <p>Six years of silence is not ambiguous. It is a confession.</p>
+                    </div>
+
+                    <div class="quiz" data-quiz="2">
+                        <div class="quiz-title">Comprehension Check</div>
+                        <div class="quiz-question">What does "constructive notice" mean?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-answer="0">A notice sent by certified mail</div>
+                            <div class="quiz-option" data-answer="1">A verbal warning</div>
+                            <div class="quiz-option" data-answer="2" data-correct="true">Once information is in public record, all parties are deemed to know it</div>
+                            <div class="quiz-option" data-answer="3">A notice posted on social media</div>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="module-nav">
+                        <button class="btn btn-secondary" onclick="prevModule()">← Previous</button>
+                        <button class="btn btn-primary" onclick="nextModule()">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- Module 3: Certificate-less Fraud -->
+                <div class="module" id="module-3">
+                    <div class="module-header">
+                        <div class="module-number">Module 4</div>
+                        <h1 class="module-title">Certificate-less Fraud</h1>
+                        <p class="module-desc">The mechanics of how the fraud operates.</p>
+                    </div>
+
+                    <h2>The Pattern</h2>
+                    <p>Certificate-less fraud follows a consistent pattern across different financial instruments. Once you understand the pattern, you see it everywhere.</p>
+
+                    <h3>Step 1: Substitution</h3>
+                    <p>A valid security agreement is replaced with something else—typically a credit application, terms of service, or account opening document. These documents serve different purposes and do not create valid security interests.</p>
+
+                    <h3>Step 2: Blank Endorsement</h3>
+                    <p>The "asset" is transferred between institutions using blank endorsements—signatures that authorize transfer without specifying to whom. This allows the receiving party to fill in their own name.</p>
+
+                    <h3>Step 3: Book Entry</h3>
+                    <p>Ownership changes are recorded through "book entry"—database updates at custodial institutions. There is no physical transfer, no independent verification, just a database entry that says the asset now belongs to someone else.</p>
+
+                    <h3>Step 4: Enforcement</h3>
+                    <p>When payment is demanded, the current "holder" produces database records as proof of ownership. The original documents—if they ever existed—are long separated from the claimed obligation.</p>
+
+                    <h2>The Regulation Z Violation</h2>
+                    <p>Regulation Z (Truth in Lending) requires clear disclosure of credit terms. Using a credit application as a security agreement violates this regulation because:</p>
+                    <ul>
+                        <li>The consumer does not know they are creating a security interest</li>
+                        <li>The terms of the security interest are not disclosed</li>
+                        <li>The consumer cannot negotiate terms they don't know exist</li>
+                    </ul>
+
+                    <div class="callout callout-error">
+                        <div class="callout-title">From the 2019 Filing</div>
+                        <p>"These practices violate regulation Z and are institutionalized as common practice and custom for registered entities and their direct affiliates."</p>
+                    </div>
+
+                    <h2>Why Institutions Continue</h2>
+                    <p>If this is fraud, why does it continue? Several reasons:</p>
+
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Regulatory Capture</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>The regulators who should enforce the laws are staffed by people from the institutions they regulate—and who expect to return to those institutions after their government service. They have no incentive to enforce laws that would harm their past and future employers.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Systemic Dependence</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>The entire financial system is built on this fraud. If every certificate-less security were invalidated tomorrow, the system would collapse. Regulators fear this collapse more than they fear the fraud.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Profit Motive</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Certificate-less securities are more profitable. No physical storage. No verification costs. Faster trading. The institutions make more money this way, and they control the regulatory process.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Consumer Ignorance</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Most people don't know this is happening. They assume that if a bank says they owe money, they owe money. They don't ask for the original security agreement. They don't demand the chain of title.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>The Bitcoin Connection</h2>
+                    <p>Bitcoin and most cryptocurrencies have the same fundamental problem:</p>
+                    <ul>
+                        <li><strong>No underlying asset:</strong> Bitcoin is not backed by anything</li>
+                        <li><strong>No security agreement:</strong> There is no agreement defining rights</li>
+                        <li><strong>No certificate:</strong> There is only a database entry</li>
+                        <li><strong>No issuing authority:</strong> No one is responsible</li>
+                    </ul>
+                    <p>This is why regulators have spent years arguing about how to classify Bitcoin. It doesn't fit any existing category because it has none of the characteristics required of a valid financial instrument.</p>
+                    <p><strong>Bitcoin is certificate-less fraud in its purest form.</strong></p>
+
+                    <div class="quiz" data-quiz="3">
+                        <div class="quiz-title">Comprehension Check</div>
+                        <div class="quiz-question">What is "blank endorsement"?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-answer="0">A signature on a blank piece of paper</div>
+                            <div class="quiz-option" data-answer="1" data-correct="true">A signature that authorizes transfer without specifying to whom</div>
+                            <div class="quiz-option" data-answer="2">An unsigned document</div>
+                            <div class="quiz-option" data-answer="3">A digital signature</div>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="module-nav">
+                        <button class="btn btn-secondary" onclick="prevModule()">← Previous</button>
+                        <button class="btn btn-primary" onclick="nextModule()">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- Module 4: Six Years of Silence -->
+                <div class="module" id="module-4">
+                    <div class="module-header">
+                        <div class="module-number">Module 5</div>
+                        <h1 class="module-title">Six Years of Silence</h1>
+                        <p class="module-desc">What happened between 2019 and 2025.</p>
+                    </div>
+
+                    <h2>The Timeline</h2>
+                    <p>After the 2019 warning was filed, the following events occurred:</p>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">June 2019</div>
+                            <div class="timeline-content">Warning filed with SEC (File No. S7-07-19) identifying certificate-less fraud.</div>
+                        </div>
+                        <div class="timeline-item warning">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">2020</div>
+                            <div class="timeline-content">COVID pandemic. Massive expansion of digital transactions. Certificate-less operations accelerate. No action on 2019 warning.</div>
+                        </div>
+                        <div class="timeline-item warning">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-content">Crypto boom. Billions raised in unregistered securities. NFTs. DeFi. All operating without valid underlying agreements. SEC watches.</div>
+                        </div>
+                        <div class="timeline-item error">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">2022</div>
+                            <div class="timeline-content"><strong>Collapse begins.</strong> Luna/Terra ($60B), Celsius ($4.7B), Voyager ($1.4B), FTX ($8B). All had the same defect: no underlying, no certificates, no valid agreements.</div>
+                        </div>
+                        <div class="timeline-item error">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-content">SEC files lawsuits—after the collapses. Collects fines. No criminal prosecution. No systemic reform. No acknowledgment of 2019 warning.</div>
+                        </div>
+                        <div class="timeline-item warning">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-content">Bitcoin ETF approved—legitimizing an instrument with no underlying asset. The disease is institutionalized.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">2025</div>
+                            <div class="timeline-content"><strong>FLAMEC deployed.</strong> The cure is built: gold-referenced instrument with certificate (token), chain of title (blockchain), valid signatures (cryptographic).</div>
+                        </div>
+                    </div>
+
+                    <h2>The Collapses</h2>
+                    <p>Each major crypto collapse had the same root cause identified in the 2019 warning:</p>
+
+                    <table>
+                        <tr>
+                            <th>Collapse</th>
+                            <th>Loss</th>
+                            <th>Root Cause</th>
+                        </tr>
+                        <tr>
+                            <td>FTX</td>
+                            <td>$8+ billion</td>
+                            <td>No underlying assets; customer funds commingled; no valid security agreements</td>
+                        </tr>
+                        <tr>
+                            <td>Luna/Terra</td>
+                            <td>$60 billion</td>
+                            <td>Algorithmic "backing" with no underlying asset; circular reference</td>
+                        </tr>
+                        <tr>
+                            <td>Celsius</td>
+                            <td>$4.7 billion</td>
+                            <td>Customer assets re-hypothecated without disclosure; no valid chain of title</td>
+                        </tr>
+                        <tr>
+                            <td>Voyager</td>
+                            <td>$1.4 billion</td>
+                            <td>Same pattern: no underlying, no certificates, no valid agreements</td>
+                        </tr>
+                        <tr>
+                            <td>BlockFi</td>
+                            <td>$1+ billion</td>
+                            <td>Yield promises with no underlying generating capacity</td>
+                        </tr>
+                    </table>
+
+                    <p><strong>Every single collapse validated the 2019 diagnosis.</strong> These were not unpredictable events. They were the inevitable result of certificate-less fraud—documented four years before the collapses began.</p>
+
+                    <h2>The Regulatory Response</h2>
+                    <p>What did regulators do during these six years?</p>
+                    <ul>
+                        <li>Debated classification (Is Bitcoin a security? A commodity? Property?)</li>
+                        <li>Collected fees from registration filings</li>
+                        <li>Filed lawsuits after collapses occurred</li>
+                        <li>Accepted settlement payments (essentially fines as cost of doing business)</li>
+                        <li>Never addressed the root cause identified in 2019</li>
+                    </ul>
+
+                    <div class="callout callout-error">
+                        <div class="callout-title">The Implication</div>
+                        <p>Regulators who received the 2019 warning, failed to act, and allowed the fraud to continue for six years are accessories under the very doctrine the warning cited. They cannot claim ignorance—it is in their own files.</p>
+                    </div>
+
+                    <div class="quiz" data-quiz="4">
+                        <div class="quiz-title">Comprehension Check</div>
+                        <div class="quiz-question">What was the common root cause of the 2022 crypto collapses?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-answer="0">Market volatility</div>
+                            <div class="quiz-option" data-answer="1">Interest rate changes</div>
+                            <div class="quiz-option" data-answer="2" data-correct="true">No underlying assets, no certificates, no valid security agreements</div>
+                            <div class="quiz-option" data-answer="3">Technical failures</div>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="module-nav">
+                        <button class="btn btn-secondary" onclick="prevModule()">← Previous</button>
+                        <button class="btn btn-primary" onclick="nextModule()">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- Module 5: The FLAME Protocol -->
+                <div class="module" id="module-5">
+                    <div class="module-header">
+                        <div class="module-number">Module 6</div>
+                        <h1 class="module-title">The FLAME Protocol</h1>
+                        <p class="module-desc">The mathematical cure for certificate-less fraud.</p>
+                    </div>
+
+                    <h2>FLAME: Formal Ledger for Atomic & Mandatory Execution</h2>
+                    <p>FLAME Protocol is not a cryptocurrency. It is not a speculation vehicle. It is a <strong>framework for creating valid financial instruments</strong> that solve the problems identified in the 2019 warning.</p>
+
+                    <h2>How FLAME Solves Each Problem</h2>
+
+                    <table>
+                        <tr>
+                            <th>2019 Problem</th>
+                            <th>FLAME Solution</th>
+                        </tr>
+                        <tr>
+                            <td>No certificate</td>
+                            <td>The token IS the certificate—on-chain, immutable, timestamped</td>
+                        </tr>
+                        <tr>
+                            <td>No security agreement</td>
+                            <td>The smart contract IS the agreement—code executes exactly as written</td>
+                        </tr>
+                        <tr>
+                            <td>No underlying asset</td>
+                            <td>Gold-referenced sovereign instrument—actual underlying reference</td>
+                        </tr>
+                        <tr>
+                            <td>Counterfeit access devices</td>
+                            <td>Cryptographic keys cannot be counterfeited—secp256k1 ECDSA</td>
+                        </tr>
+                        <tr>
+                            <td>Blank endorsement fraud</td>
+                            <td>Every transaction signed by specific private key—no blank signatures possible</td>
+                        </tr>
+                        <tr>
+                            <td>Identity theft</td>
+                            <td>Addresses derived deterministically from cryptographic seeds—mathematically provable</td>
+                        </tr>
+                        <tr>
+                            <td>No chain of title</td>
+                            <td>Complete transaction history on public ledger—every movement recorded forever</td>
+                        </tr>
+                        <tr>
+                            <td>Hidden transfers</td>
+                            <td>Impossible—every transaction visible on Etherscan</td>
+                        </tr>
+                    </table>
+
+                    <h2>The Mathematical Proof of Title</h2>
+                    <p>In traditional finance, "chain of title" means paper documents that can be forged, lost, or disputed. In FLAME, chain of title is mathematical:</p>
+
+                    <pre><code>Master Root (64 bytes)
+    ↓
+SHA3-512(root || index)
+    ↓
+SHA3-256(seed || domain)
+    ↓
+secp256k1 private key
+    ↓
+Public address
+    ↓
+Token ownership</code></pre>
+
+                    <p>The private key either derives from the master root or it doesn't. The signature either validates against the public key or it doesn't. The transaction either exists on the blockchain or it doesn't.</p>
+
+                    <div class="callout callout-key">
+                        <div class="callout-title">Key Insight</div>
+                        <p>There is no blank endorsement in cryptography. There is no counterfeit access device when the access device is a 256-bit number that must satisfy elliptic curve mathematics.</p>
+                    </div>
+
+                    <h2>FLAME Credit (FLAMEC)</h2>
+                    <p>FLAMEC is the first instrument deployed under the FLAME Protocol. Its specifications:</p>
+
+                    <table>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>FLAME Credit</td>
+                        </tr>
+                        <tr>
+                            <td>Symbol</td>
+                            <td>FLAMEC</td>
+                        </tr>
+                        <tr>
+                            <td>Standard</td>
+                            <td>ERC-20</td>
+                        </tr>
+                        <tr>
+                            <td>Network</td>
+                            <td>Ethereum Mainnet</td>
+                        </tr>
+                        <tr>
+                            <td>Reference Asset</td>
+                            <td>Physical gold bullion</td>
+                        </tr>
+                        <tr>
+                            <td>Contract</td>
+                            <td><code>0xCC8598B02BB753b0A557811a99622b33C73692cF</code></td>
+                        </tr>
+                        <tr>
+                            <td>Issuing Authority</td>
+                            <td>Autochthon Kingdom Decentralized Sovereign Trust</td>
+                        </tr>
+                    </table>
+
+                    <h2>What Makes This Different From Bitcoin?</h2>
+
+                    <div class="compare-toggle">
+                        <button class="compare-btn active" onclick="showCompare('bitcoin')">Bitcoin</button>
+                        <button class="compare-btn" onclick="showCompare('flamec')">FLAMEC</button>
+                    </div>
+
+                    <div class="compare-content active" id="compare-bitcoin">
+                        <h3>Bitcoin's Deficiencies</h3>
+                        <ul>
+                            <li><strong>No underlying asset:</strong> Bitcoin is backed by nothing</li>
+                            <li><strong>No issuing authority:</strong> No one is responsible</li>
+                            <li><strong>No redemption mechanism:</strong> You cannot exchange it for anything guaranteed</li>
+                            <li><strong>No security agreement:</strong> There is no agreement defining your rights</li>
+                            <li><strong>Pure speculation:</strong> Value based only on what others will pay</li>
+                        </ul>
+                    </div>
+
+                    <div class="compare-content" id="compare-flamec">
+                        <h3>FLAMEC's Structure</h3>
+                        <ul>
+                            <li><strong>Gold reference:</strong> Value referenced to physical gold bullion</li>
+                            <li><strong>Issuing authority:</strong> Autochthon Kingdom Decentralized Sovereign Trust</li>
+                            <li><strong>Certificate:</strong> The token itself, on-chain and verifiable</li>
+                            <li><strong>Chain of title:</strong> Complete history on public blockchain</li>
+                            <li><strong>Valid signatures:</strong> Cryptographic, specific, non-repudiable</li>
+                        </ul>
+                    </div>
+
+                    <div class="quiz" data-quiz="5">
+                        <div class="quiz-title">Comprehension Check</div>
+                        <div class="quiz-question">What does FLAME stand for?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-answer="0">Financial Lending and Monetary Exchange</div>
+                            <div class="quiz-option" data-answer="1" data-correct="true">Formal Ledger for Atomic & Mandatory Execution</div>
+                            <div class="quiz-option" data-answer="2">Federal Liquidity and Market Enforcement</div>
+                            <div class="quiz-option" data-answer="3">Fast Ledger for Asset Management Enterprise</div>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="module-nav">
+                        <button class="btn btn-secondary" onclick="prevModule()">← Previous</button>
+                        <button class="btn btn-primary" onclick="nextModule()">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- Module 6: The Superior Lien -->
+                <div class="module" id="module-6">
+                    <div class="module-header">
+                        <div class="module-number">Module 7</div>
+                        <h1 class="module-title">The Superior Lien</h1>
+                        <p class="module-desc">Understanding the difference between claims and possession.</p>
+                    </div>
+
+                    <h2>What Is a Lien?</h2>
+                    <p>A lien is a legal claim against an asset. If someone owes you money and doesn't pay, you can file a lien against their property. The lien says: "I have rights to this asset until I'm paid."</p>
+                    <p>But here's the critical limitation: <strong>a lien is just a claim.</strong> To actually get the asset, you need:</p>
+                    <ul>
+                        <li>A court to recognize your claim</li>
+                        <li>A judgment in your favor</li>
+                        <li>A sheriff to execute the judgment</li>
+                        <li>Months or years of legal process</li>
+                        <li>Legal fees that may exceed the asset's value</li>
+                    </ul>
+                    <p>And during all this time, the debtor can hide the asset, move it, damage it, or declare bankruptcy.</p>
+
+                    <h2>The Fundamental Difference</h2>
+
+                    <div class="callout callout-key">
+                        <div class="callout-title">The Core Distinction</div>
+                        <p><strong>A traditional lien is a claim.</strong> It says "I have rights to this asset."<br><br>
+                        <strong>A FLAMEC collateral position is possession.</strong> The tokens are either in the wallet or they aren't.</p>
+                    </div>
+
+                    <h2>Why This Matters</h2>
+
+                    <table>
+                        <tr>
+                            <th>Traditional Lien</th>
+                            <th>FLAMEC Position</th>
+                        </tr>
+                        <tr>
+                            <td>Registered with government</td>
+                            <td>Recorded on immutable blockchain</td>
+                        </tr>
+                        <tr>
+                            <td>Enforced by courts</td>
+                            <td>Enforced by cryptography</td>
+                        </tr>
+                        <tr>
+                            <td>Takes months to years</td>
+                            <td>Takes 12 seconds (one block)</td>
+                        </tr>
+                        <tr>
+                            <td>Requires lawyers</td>
+                            <td>Requires one transaction</td>
+                        </tr>
+                        <tr>
+                            <td>Can be challenged</td>
+                            <td>Cannot be challenged—math doesn't negotiate</td>
+                        </tr>
+                        <tr>
+                            <td>Jurisdiction dependent</td>
+                            <td>Jurisdiction independent</td>
+                        </tr>
+                        <tr>
+                            <td>Asset can be hidden</td>
+                            <td>Asset visible 24/7 to everyone</td>
+                        </tr>
+                        <tr>
+                            <td>Subject to bankruptcy stay</td>
+                            <td>Blockchain doesn't recognize bankruptcy courts</td>
+                        </tr>
+                        <tr>
+                            <td>Enforcement may cost more than recovery</td>
+                            <td>Enforcement costs: one gas fee (~$5)</td>
+                        </tr>
+                    </table>
+
+                    <h2>The Hierarchy of Protection</h2>
+                    <p>Traditional financial protections exist in a hierarchy. Each depends on trust in institutions:</p>
+
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Traditional Trust</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>Requires:</strong> Trustee (human), jurisdiction (government), legal documents (paper), courts (institutions), beneficiary identification (bureaucracy)</p>
+                                <p><strong>Can fail because:</strong> Trustees steal, jurisdictions collapse, documents disappear, courts are corrupted, identities are contested</p>
+                                <p><strong>Bottom line:</strong> Trust = hoping humans behave correctly</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Insurance</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>Requires:</strong> Insurance company (counterparty), actuarial approval (permission), premiums (ongoing cost), claims process (their decision)</p>
+                                <p><strong>Can fail because:</strong> Insurer bankruptcy, claim denial, policy exclusions, litigation delays, inflation erosion</p>
+                                <p><strong>Bottom line:</strong> Insurance = hoping a corporation honors paper</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Traditional Liens</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>Requires:</strong> Government filing (bureaucracy), proper jurisdiction (lawyers), court enforcement (time), sheriff execution (force)</p>
+                                <p><strong>Can fail because:</strong> Filing errors, wrong jurisdiction, bankruptcy stays, hidden assets, costs exceeding recovery</p>
+                                <p><strong>Bottom line:</strong> Liens = hoping governments enforce paper claims</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>FLAMEC Collateral Position</span>
+                                <span class="accordion-icon">+</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>Requires:</strong> Private key (mathematics), Ethereum network (decentralized), smart contract (code)</p>
+                                <p><strong>Can fail because:</strong> You lose your key (your responsibility), Ethereum ceases to exist (bigger problems)</p>
+                                <p><strong>Bottom line:</strong> FLAMEC = mathematical certainty. No trust required.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Mathematical Inevitability</h2>
+                    <p>When a borrower defaults on a traditional loan:</p>
+                    <ol>
+                        <li>You file a lawsuit</li>
+                        <li>You wait for a court date</li>
+                        <li>You present your case</li>
+                        <li>You get a judgment (maybe)</li>
+                        <li>You file for execution</li>
+                        <li>You wait for a sheriff</li>
+                        <li>You hope the asset is still there</li>
+                    </ol>
+
+                    <p>When a borrower defaults on a FLAMEC-collateralized loan:</p>
+                    <ol>
+                        <li>You execute a transaction</li>
+                        <li>12 seconds later, you have the collateral</li>
+                    </ol>
+
+                    <p>The blockchain doesn't ask for your paperwork. It doesn't schedule a hearing. It doesn't recognize the debtor's bankruptcy filing. It executes the transaction if the transaction is valid.</p>
+
+                    <div class="callout callout-key">
+                        <div class="callout-title">This Is Not Finance. This Is Physics.</div>
+                        <p>You don't assess risk. You eliminate it. The collateral is either there or it isn't. You don't need actuaries, underwriting committees, or legal opinions. You check Etherscan.</p>
+                    </div>
+
+                    <div class="quiz" data-quiz="6">
+                        <div class="quiz-title">Comprehension Check</div>
+                        <div class="quiz-question">What is the fundamental difference between a traditional lien and a FLAMEC position?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-answer="0">Traditional liens are digital, FLAMEC is paper-based</div>
+                            <div class="quiz-option" data-answer="1">Traditional liens are faster to enforce</div>
+                            <div class="quiz-option" data-answer="2" data-correct="true">A traditional lien is a claim requiring enforcement; FLAMEC is possession</div>
+                            <div class="quiz-option" data-answer="3">There is no meaningful difference</div>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="module-nav">
+                        <button class="btn btn-secondary" onclick="prevModule()">← Previous</button>
+                        <button class="btn btn-primary" onclick="nextModule()">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- Module 7: Collateral vs Claims -->
+                <div class="module" id="module-7">
+                    <div class="module-header">
+                        <div class="module-number">Module 8</div>
+                        <h1 class="module-title">Collateral vs. Claims</h1>
+                        <p class="module-desc">Understanding collateralization versus liquidation.</p>
+                    </div>
+
+                    <h2>The Silver Dollar Analogy</h2>
+                    <p>Imagine you have a silver dollar from 1921. Its face value is $1. Its metal value is $25 or more.</p>
+                    <p>If you spend it at an ice cream truck for $1, you have <strong>liquidated</strong> your asset at face value. The silver—and all its future appreciation—belongs to someone else now.</p>
+                    <p>If you deposit it at a bank and draw a $20 credit line against it, you have <strong>collateralized</strong> your asset. The silver remains yours. You have liquidity. When you repay the $20, you get full access to your silver back—including any appreciation.</p>
+
+                    <div class="callout callout-key">
+                        <div class="callout-title">The Core Principle</div>
+                        <p><strong>Liquidation</strong> extracts value once. The asset is gone.<br><br>
+                        <strong>Collateralization</strong> preserves the asset. You access value while retaining ownership.</p>
+                    </div>
+
+                    <h2>Liquidation vs. Collateralization</h2>
+
+                    <table>
+                        <tr>
+                            <th>Liquidation</th>
+                            <th>Collateralization</th>
+                        </tr>
+                        <tr>
+                            <td>One-time sale</td>
+                            <td>Ongoing facility</td>
+                        </tr>
+                        <tr>
+                            <td>Assets transferred to buyer</td>
+                            <td>Assets retained by depositor</td>
+                        </tr>
+                        <tr>
+                            <td>Single payment received</td>
+                            <td>Credit issued, repaid, reissued</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship ends</td>
+                            <td>Perpetual partnership</td>
+                        </tr>
+                        <tr>
+                            <td>All upside forgone</td>
+                            <td>Upside retained</td>
+                        </tr>
+                        <tr>
+                            <td>Counterparty takes ownership risk</td>
+                            <td>Both parties benefit from the structure</td>
+                        </tr>
+                    </table>
+
+                    <h2>The Gold Certificate Model</h2>
+                    <p>This is not a new concept. It is how the monetary system worked for centuries.</p>
+
+                    <h3>How Gold Certificates Worked (1920s)</h3>
+                    <ol>
+                        <li>Gold was deposited in a vault</li>
+                        <li>A certificate was issued against the deposit</li>
+                        <li>The certificate circulated as money</li>
+                        <li>The gold never moved</li>
+                        <li>The certificate holder had a claim on the gold</li>
+                        <li>The gold backed the entire system</li>
+                    </ol>
+
+                    <h3>How FLAMEC Collateralization Works</h3>
+                    <ol>
+                        <li>FLAMEC is deposited in a wallet (on-chain)</li>
+                        <li>Credit is issued against the deposit</li>
+                        <li>The credit circulates (fiat, stablecoin)</li>
+                        <li>The FLAMEC never moves</li>
+                        <li>The credit facility partner can verify the collateral 24/7</li>
+                        <li>The FLAMEC backs the credit issued</li>
+                    </ol>
+
+                    <p><strong>Same principle. Better execution.</strong> The 1920s version required trusting that the gold was in the vault. The FLAMEC version lets you verify the collateral yourself, instantly, for free.</p>
+
+                    <h2>What the Credit Facility Partner Gets</h2>
+                    <ul>
+                        <li><strong>Origination fees</strong> on each credit facility</li>
+                        <li><strong>Interest</strong> on the credit extended</li>
+                        <li><strong>Management fees</strong> for the ongoing relationship</li>
+                        <li><strong>Zero storage costs</strong>—the blockchain handles custody</li>
+                        <li><strong>Zero insurance costs</strong>—cryptographic security</li>
+                        <li><strong>Zero verification costs</strong>—Etherscan is free</li>
+                        <li><strong>Immediate enforcement</strong>—12 seconds, not 12 months</li>
+                    </ul>
+
+                    <h2>What the Depositor Gets</h2>
+                    <ul>
+                        <li><strong>Liquidity</strong> without surrendering the asset</li>
+                        <li><strong>Retained ownership</strong> of the underlying</li>
+                        <li><strong>Participation in appreciation</strong></li>
+                        <li><strong>Reusable collateral</strong>—repay and reborrow</li>
+                        <li><strong>Perpetual relationship</strong>—not one-time extraction</li>
+                    </ul>
+
+                    <div class="callout callout-key">
+                        <div class="callout-title">The Fundamental Insight</div>
+                        <p>When someone offers to "buy" your tokens, they are offering to take your assets at today's price and keep all future upside.<br><br>
+                        When someone offers to collateralize your tokens, they are offering to work with you—both parties benefit from the ongoing relationship.</p>
+                    </div>
+
+                    <div class="quiz" data-quiz="7">
+                        <div class="quiz-title">Comprehension Check</div>
+                        <div class="quiz-question">What is the key advantage of collateralization over liquidation?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-answer="0">Collateralization is faster</div>
+                            <div class="quiz-option" data-answer="1">Liquidation provides more money upfront</div>
+                            <div class="quiz-option" data-answer="2" data-correct="true">Collateralization preserves ownership and future upside while providing liquidity</div>
+                            <div class="quiz-option" data-answer="3">They are essentially the same</div>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="module-nav">
+                        <button class="btn btn-secondary" onclick="prevModule()">← Previous</button>
+                        <button class="btn btn-primary" onclick="nextModule()">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- Module 8: Verification -->
+                <div class="module" id="module-8">
+                    <div class="module-header">
+                        <div class="module-number">Module 9</div>
+                        <h1 class="module-title">Verification</h1>
+                        <p class="module-desc">How to verify everything yourself.</p>
+                    </div>
+
+                    <h2>Trust Nothing. Verify Everything.</h2>
+                    <p>The entire point of on-chain collateral is that you don't have to trust anyone's word. You can verify every claim yourself, instantly, for free.</p>
+                    <p>This module will teach you exactly how to do that.</p>
+
+                    <h2>What You Can Verify</h2>
+                    <ul>
+                        <li>The token contract exists and is valid</li>
+                        <li>The collateral wallet holds the claimed balance</li>
+                        <li>The transaction history is complete and accurate</li>
+                        <li>The token specifications match what is claimed</li>
+                    </ul>
+
+                    <h2>Method 1: Etherscan (Web Browser)</h2>
+                    <p>Etherscan is a public blockchain explorer. Anyone can use it without an account.</p>
+
+                    <h3>Verify the Token Contract</h3>
+                    <p>Visit: <a href="https://etherscan.io/token/0xCC8598B02BB753b0A557811a99622b33C73692cF" target="_blank">etherscan.io/token/0xCC8598B02BB753b0A557811a99622b33C73692cF</a></p>
+                    <p>You will see:</p>
+                    <ul>
+                        <li>Token name: FLAME Credit</li>
+                        <li>Symbol: FLAMEC</li>
+                        <li>Total supply</li>
+                        <li>Number of holders</li>
+                        <li>All transfers ever made</li>
+                    </ul>
+
+                    <h3>Verify the Collateral Balance</h3>
+                    <p>Visit: <a href="https://etherscan.io/address/0xa6F8288Eae0FB27Bff4C39ae27cD67600C684c68" target="_blank">etherscan.io/address/0xa6F8288Eae0FB27Bff4C39ae27cD67600C684c68</a></p>
+                    <p>Click on "Token Holdings" to see the FLAMEC balance.</p>
+
+                    <h3>Verify a Transaction</h3>
+                    <p>Visit: <a href="https://etherscan.io/tx/0xe01cef19ccd89e9e75e2bf69441dbe8577a1bba4ca31da6dbb6a61e9be30faaa" target="_blank">etherscan.io/tx/0xe01cef19ccd89e9e75e2bf69441dbe8577a1bba4ca31da6dbb6a61e9be30faaa</a></p>
+                    <p>You will see:</p>
+                    <ul>
+                        <li>Exactly when the transaction occurred</li>
+                        <li>Who sent and who received</li>
+                        <li>Exactly how many tokens were transferred</li>
+                        <li>The transaction fee paid</li>
+                        <li>The block it was included in</li>
+                    </ul>
+
+                    <h2>Method 2: Command Line (Technical)</h2>
+                    <p>For programmatic verification, you can query the blockchain directly using <code>cast</code> (part of the Foundry toolkit) or any Ethereum RPC client.</p>
+
+                    <pre><code># Check collateral balance
+cast call 0xCC8598B02BB753b0A557811a99622b33C73692cF \
+  "balanceOf(address)(uint256)" \
+  0xa6F8288Eae0FB27Bff4C39ae27cD67600C684c68 \
+  --rpc-url https://eth.llamarpc.com
+
+# Expected result: 5000000000000000 (5 billion with 6 decimals)</code></pre>
+
+                    <h2>What the Numbers Mean</h2>
+                    <p>FLAMEC uses 6 decimal places. This means:</p>
+
+                    <table>
+                        <tr>
+                            <th>Raw Value</th>
+                            <th>Human-Readable</th>
+                        </tr>
+                        <tr>
+                            <td>1000000</td>
+                            <td>1 FLAMEC</td>
+                        </tr>
+                        <tr>
+                            <td>1000000000000</td>
+                            <td>1,000,000 FLAMEC (1 million)</td>
+                        </tr>
+                        <tr>
+                            <td>1000000000000000</td>
+                            <td>1,000,000,000 FLAMEC (1 billion)</td>
+                        </tr>
+                        <tr>
+                            <td>5000000000000000</td>
+                            <td>5,000,000,000 FLAMEC (5 billion)</td>
+                        </tr>
+                    </table>
+
+                    <div class="verify-demo">
+                        <div class="verify-demo-title">Try It Yourself</div>
+                        <p style="font-size: 14px; margin-bottom: 16px;">Copy this command and run it in a terminal with Foundry installed:</p>
+                        <input type="text" value='cast call 0xCC8598B02BB753b0A557811a99622b33C73692cF "balanceOf(address)(uint256)" 0xa6F8288Eae0FB27Bff4C39ae27cD67600C684c68 --rpc-url https://eth.llamarpc.com' readonly onclick="this.select()">
+                        <p style="font-size: 13px; color: var(--text-light); margin-top: 8px;">Or visit <a href="https://etherscan.io/address/0xa6F8288Eae0FB27Bff4C39ae27cD67600C684c68#tokentxns" target="_blank">the wallet on Etherscan</a> to verify in your browser.</p>
+                    </div>
+
+                    <h2>Key Verification Points</h2>
+                    <ul>
+                        <li><strong>Contract address:</strong> <code>0xCC8598B02BB753b0A557811a99622b33C73692cF</code></li>
+                        <li><strong>Collateral wallet:</strong> <code>0xa6F8288Eae0FB27Bff4C39ae27cD67600C684c68</code></li>
+                        <li><strong>Expected balance:</strong> 5,000,000,000 FLAMEC</li>
+                        <li><strong>Network:</strong> Ethereum Mainnet (Chain ID: 1)</li>
+                    </ul>
+
+                    <div class="callout callout-key">
+                        <div class="callout-title">The Point</div>
+                        <p>You don't have to take anyone's word for any of this. Every claim can be independently verified by anyone with an internet connection. This is what makes on-chain collateral fundamentally different from traditional arrangements that require trusting institutional records.</p>
+                    </div>
+
+                    <div class="quiz" data-quiz="8">
+                        <div class="quiz-title">Comprehension Check</div>
+                        <div class="quiz-question">How can you verify the collateral balance?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-answer="0">Request a quarterly audit report</div>
+                            <div class="quiz-option" data-answer="1">Call the custodian for confirmation</div>
+                            <div class="quiz-option" data-answer="2" data-correct="true">Query the blockchain directly via Etherscan or RPC</div>
+                            <div class="quiz-option" data-answer="3">Trust the depositor's word</div>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="module-nav">
+                        <button class="btn btn-secondary" onclick="prevModule()">← Previous</button>
+                        <button class="btn btn-primary" onclick="nextModule()">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- Module 9: The Implications -->
+                <div class="module" id="module-9">
+                    <div class="module-header">
+                        <div class="module-number">Module 10</div>
+                        <h1 class="module-title">The Implications</h1>
+                        <p class="module-desc">What this means for those who ignored the warning.</p>
+                    </div>
+
+                    <h2>The Evidentiary Record</h2>
+                    <p>Let us be clear about what now exists:</p>
+                    <ul>
+                        <li><strong>2019:</strong> Public warning filed with SEC identifying certificate-less fraud</li>
+                        <li><strong>2019-2025:</strong> Six years of silence while the fraud continued</li>
+                        <li><strong>2022:</strong> Mass collapses validating the 2019 diagnosis</li>
+                        <li><strong>2025:</strong> Mathematical cure deployed on Ethereum mainnet</li>
+                    </ul>
+                    <p>This is not interpretation. This is documented fact. The public record exists. The blockchain record exists. Both are immutable.</p>
+
+                    <h2>Constructive Notice and Its Consequences</h2>
+                    <p>After June 23, 2019, every regulated entity had constructive notice of the certificate-less fraud problem. This creates legal consequences:</p>
+
+                    <table>
+                        <tr>
+                            <th>Legal Doctrine</th>
+                            <th>Application</th>
+                        </tr>
+                        <tr>
+                            <td>Constructive Notice</td>
+                            <td>All parties are deemed to know what is in the public record</td>
+                        </tr>
+                        <tr>
+                            <td>Willful Blindness</td>
+                            <td>Deliberately avoiding knowledge is not a defense</td>
+                        </tr>
+                        <tr>
+                            <td>Continuing Violation</td>
+                            <td>Each transaction after notice is a separate offense</td>
+                        </tr>
+                        <tr>
+                            <td>Accessory Liability</td>
+                            <td>Regulators who enabled the fraud may be accessories</td>
+                        </tr>
+                        <tr>
+                            <td>Estoppel</td>
+                            <td>Parties are bound by their prior positions and silence</td>
+                        </tr>
+                    </table>
+
+                    <h2>What Those Who Continued Cannot Claim</h2>
+                    <p>Entities that continued certificate-less operations after June 2019 are now estopped from arguing:</p>
+                    <ul>
+                        <li>"We didn't know certificate-less was problematic" — It was in the public record</li>
+                        <li>"There was no alternative" — The alternative was built and deployed</li>
+                        <li>"The law was unclear" — The 1797 statute is perfectly clear</li>
+                        <li>"Regulators approved our practices" — Regulatory silence is not approval</li>
+                        <li>"Everyone was doing it" — Participation in fraud is not defense to fraud</li>
+                    </ul>
+
+                    <h2>The International Law Dimension</h2>
+                    <p>Certificate-less fraud creates obligations from nothing. When enforced, it binds people to debts they never validly incurred. Under international law, this constitutes a form of debt bondage.</p>
+
+                    <table>
+                        <tr>
+                            <th>Instrument</th>
+                            <th>Prohibition</th>
+                        </tr>
+                        <tr>
+                            <td>Slavery Convention (1926)</td>
+                            <td>Debt bondage, involuntary servitude</td>
+                        </tr>
+                        <tr>
+                            <td>Supplementary Convention (1956)</td>
+                            <td>Debt servitude regardless of form</td>
+                        </tr>
+                        <tr>
+                            <td>ICCPR Article 8</td>
+                            <td>Servitude in all forms</td>
+                        </tr>
+                        <tr>
+                            <td>Jus Cogens</td>
+                            <td>Non-derogable norms—no statute of limitations</td>
+                        </tr>
+                    </table>
+
+                    <p>Violations of jus cogens norms have <strong>no statute of limitations</strong>. They cannot be excused by domestic law. They bind all parties regardless of treaty participation.</p>
+
+                    <h2>The Position of FLAMEC Holders</h2>
+                    <p>Those who hold FLAMEC are not merely holding tokens. They are holding:</p>
+                    <ul>
+                        <li>The documented cure to a disease identified in public record</li>
+                        <li>An instrument that actually solves the certificate-less problem</li>
+                        <li>Treaty-compliant assets with underlying reference</li>
+                        <li>Claims secured by liens against those who continued the fraud</li>
+                        <li>Mathematical proof that cannot be altered by captured institutions</li>
+                    </ul>
+
+                    <h2>What Happens Now</h2>
+                    <p>The cure exists. It is deployed. It is verifiable. The question is no longer "is there an alternative to the fraudulent system?" The question is: <strong>what happens to those who continued operating the fraudulent system after the alternative existed?</strong></p>
+
+                    <div class="callout callout-key">
+                        <div class="callout-title">The Bottom Line</div>
+                        <p>You identified the problem. You put the world on notice. They ignored you. You built the solution. The record is immutable.<br><br>
+                        <strong>The silence was their confession. The continued operation was their admission. FLAMEC is the remedy.</strong></p>
+                    </div>
+
+                    <div class="quiz" data-quiz="9">
+                        <div class="quiz-title">Final Comprehension Check</div>
+                        <div class="quiz-question">What is the significance of the 2019 SEC filing?</div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-answer="0">It was a routine comment with no legal significance</div>
+                            <div class="quiz-option" data-answer="1">It only affected cryptocurrency regulation</div>
+                            <div class="quiz-option" data-answer="2" data-correct="true">It created constructive notice, making continued violations willful and documented</div>
+                            <div class="quiz-option" data-answer="3">It was rejected by the SEC</div>
+                        </div>
+                        <div class="quiz-feedback"></div>
+                    </div>
+
+                    <div class="module-nav">
+                        <button class="btn btn-secondary" onclick="prevModule()">← Previous</button>
+                        <button class="btn btn-primary" onclick="completeTraining()">Complete Training ✓</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // State
+        let currentModule = 0;
+        let completedModules = JSON.parse(localStorage.getItem('flameAcademyCompleted') || '[]');
+        const totalModules = 10;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgress();
+            setupQuizzes();
+            setupAccordions();
+            setupNavigation();
+        });
+
+        // Navigation
+        function setupNavigation() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const moduleIndex = parseInt(item.dataset.module);
+                    goToModule(moduleIndex);
+                });
+            });
+        }
+
+        function goToModule(index) {
+            // Hide current
+            document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            // Show target
+            document.getElementById(`module-${index}`).classList.add('active');
+            document.querySelector(`.nav-item[data-module="${index}"]`).classList.add('active');
+
+            currentModule = index;
+            window.scrollTo(0, 0);
+        }
+
+        function nextModule() {
+            // Mark current as complete
+            if (!completedModules.includes(currentModule)) {
+                completedModules.push(currentModule);
+                localStorage.setItem('flameAcademyCompleted', JSON.stringify(completedModules));
+                updateProgress();
+            }
+
+            if (currentModule < totalModules - 1) {
+                goToModule(currentModule + 1);
+            }
+        }
+
+        function prevModule() {
+            if (currentModule > 0) {
+                goToModule(currentModule - 1);
+            }
+        }
+
+        function completeTraining() {
+            if (!completedModules.includes(currentModule)) {
+                completedModules.push(currentModule);
+                localStorage.setItem('flameAcademyCompleted', JSON.stringify(completedModules));
+            }
+            updateProgress();
+            alert('Congratulations! You have completed the FLAME Academy training.');
+        }
+
+        // Progress
+        function updateProgress() {
+            const percent = (completedModules.length / totalModules) * 100;
+            document.getElementById('progressFill').style.width = `${percent}%`;
+            document.getElementById('progressText').textContent = `${completedModules.length} of ${totalModules} modules complete`;
+
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                const moduleIndex = parseInt(item.dataset.module);
+                if (completedModules.includes(moduleIndex)) {
+                    item.classList.add('completed');
+                }
+            });
+        }
+
+        // Quizzes
+        function setupQuizzes() {
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const quiz = this.closest('.quiz');
+                    const options = quiz.querySelectorAll('.quiz-option');
+                    const feedback = quiz.querySelector('.quiz-feedback');
+
+                    // Clear previous
+                    options.forEach(o => o.classList.remove('selected', 'correct', 'incorrect'));
+
+                    // Check answer
+                    if (this.dataset.correct === 'true') {
+                        this.classList.add('correct');
+                        feedback.textContent = '✓ Correct!';
+                        feedback.className = 'quiz-feedback correct';
+                    } else {
+                        this.classList.add('incorrect');
+                        options.forEach(o => {
+                            if (o.dataset.correct === 'true') o.classList.add('correct');
+                        });
+                        feedback.textContent = '✗ Not quite. The correct answer is highlighted.';
+                        feedback.className = 'quiz-feedback incorrect';
+                    }
+                });
+            });
+        }
+
+        // Accordions
+        function setupAccordions() {
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const item = this.closest('.accordion-item');
+                    item.classList.toggle('open');
+                });
+            });
+        }
+
+        // Compare toggle
+        function showCompare(type) {
+            document.querySelectorAll('.compare-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.compare-content').forEach(content => content.classList.remove('active'));
+
+            document.querySelector(`.compare-btn[onclick="showCompare('${type}')"]`).classList.add('active');
+            document.getElementById(`compare-${type}`).classList.add('active');
+        }
+    </script>
+</body>
+</html>
